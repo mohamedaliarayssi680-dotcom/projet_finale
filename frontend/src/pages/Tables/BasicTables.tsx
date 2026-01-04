@@ -199,36 +199,27 @@ export default function CommandesList() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* Header */}
-      <header
-        className={`sticky top-0 z-20 bg-white shadow-sm dark:bg-gray-800 dark:shadow-gray-700/20 transition-all duration-300 ${
-          isCommandeModalOpen ||
-          commandeToDelete ||
-          isTerrainModalOpen ||
-          terrainToDelete
-            ? "hidden"
-            : ""
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <h1 className="text-3xl font-extrabold text-gray-800 dark:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* === HEADER STYLE CLIENTSLIST === */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
             Liste des Commandes
           </h1>
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-full px-3 py-2 shadow-inner w-64">
-              <FiSearch className="text-gray-500 dark:text-gray-300" />
+            <div className="flex items-center bg-white dark:bg-gray-800 rounded-full px-3 py-2 shadow-sm border border-gray-200 dark:border-gray-700">
+              <FiSearch className="text-gray-500 dark:text-gray-400" />
               <input
                 type="text"
                 placeholder="Rechercher..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="ml-2 bg-transparent outline-none placeholder-gray-400 dark:placeholder-gray-300 text-gray-800 dark:text-white"
+                className="ml-2 bg-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500 text-gray-800 dark:text-white"
               />
             </div>
 
-            <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-full px-3 py-2 shadow-inner">
-              <FiFilter className="text-gray-500 dark:text-gray-300 mr-2" />
+            <div className="flex items-center bg-white dark:bg-gray-800 rounded-full px-3 py-2 shadow-sm border border-gray-200 dark:border-gray-700">
+              <FiFilter className="text-gray-500 dark:text-gray-400 mr-2" />
               <select
                 value={filterStatut}
                 onChange={(e) => setFilterStatut(e.target.value)}
@@ -240,8 +231,8 @@ export default function CommandesList() {
               </select>
             </div>
 
-            <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-full px-3 py-2 shadow-inner">
-              <FiFilter className="text-gray-500 dark:text-gray-300 mr-2" />
+            <div className="flex items-center bg-white dark:bg-gray-800 rounded-full px-3 py-2 shadow-sm border border-gray-200 dark:border-gray-700">
+              <FiFilter className="text-gray-500 dark:text-gray-400 mr-2" />
               <select
                 value={filterStatutP}
                 onChange={(e) => setFilterStatutP(e.target.value)}
@@ -255,17 +246,15 @@ export default function CommandesList() {
 
             <button
               onClick={openAddCommande}
-              className="ml-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition dark:from-blue-700 dark:to-indigo-700"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition"
             >
-              <FiPlus /> Nouvelle commande
+              <FiPlus size={16} /> Nouvelle commande
             </button>
           </div>
         </div>
-      </header>
 
-      {/* Table */}
-      <main className="max-w-7xl mx-auto px-6 py-6">
-        <div className="overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-700/30 transition">
+        {/* === TABLE STYLE CLIENTSLIST === */}
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           <div className="overflow-x-auto">
             <table className="w-full min-w-full text-sm text-left text-gray-700 dark:text-gray-300">
               <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-800 dark:text-gray-200 uppercase tracking-wider">
@@ -447,166 +436,165 @@ export default function CommandesList() {
             </table>
           </div>
         </div>
-      </main>
 
-      {/* === MODALES COMMANDES === */}
-      {isCommandeModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-          <div
-            className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
-            onClick={closeCommandeModal}
-          ></div>
-          <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 transform transition-all">
-            <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+        {/* === MODALES (inchangées) === */}
+        {isCommandeModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div
+              className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
               onClick={closeCommandeModal}
-              aria-label="Fermer"
-            >
-              <FiX size={24} />
-            </button>
-            <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-white">
-              {editingCommande
-                ? "Modifier la commande"
-                : "Ajouter une commande"}
-            </h2>
-            <CommandeForm
-              commande={editingCommande}
-              onCancel={closeCommandeModal}
-              onSave={handleSaveCommande}
-            />
-          </div>
-        </div>
-      )}
-
-      {isCommandeSuccessModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-          <div className="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
-          <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center transform transition-all">
-            <div className="mx-auto w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-4">
-              <FiCheckCircle
-                className="text-emerald-600 dark:text-emerald-400"
-                size={32}
-              />
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-              Succès !
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              La commande a été enregistrée.
-            </p>
-            <button
-              onClick={closeCommandeSuccessModal}
-              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-600 text-white transition shadow-md"
-            >
-              Fermer
-            </button>
-          </div>
-        </div>
-      )}
-
-      {commandeToDelete && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-          <div
-            className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
-            onClick={closeDeleteCommandeModal}
-          ></div>
-          <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 text-center transform transition-all">
-            <div className="mx-auto w-14 h-14 bg-rose-100 dark:bg-rose-900/30 rounded-full flex items-center justify-center mb-4">
-              <FiAlertTriangle
-                className="text-rose-600 dark:text-rose-400"
-                size={28}
-              />
-            </div>
-            <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
-              Supprimer cette commande ?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Réf: <strong>{commandeToDelete.reference}</strong> – Tous les
-              terrains associés seront supprimés.
-            </p>
-            <div className="flex gap-3 justify-center">
+            ></div>
+            <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 transform transition-all">
               <button
-                onClick={closeDeleteCommandeModal}
-                className="px-5 py-2.5 rounded-xl bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white transition"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                onClick={closeCommandeModal}
+                aria-label="Fermer"
               >
-                Annuler
+                <FiX size={24} />
               </button>
+              <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-white">
+                {editingCommande
+                  ? "Modifier la commande"
+                  : "Ajouter une commande"}
+              </h2>
+              <CommandeForm
+                commande={editingCommande}
+                onCancel={closeCommandeModal}
+                onSave={handleSaveCommande}
+              />
+            </div>
+          </div>
+        )}
+
+        {isCommandeSuccessModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div className="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
+            <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center transform transition-all">
+              <div className="mx-auto w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-4">
+                <FiCheckCircle
+                  className="text-emerald-600 dark:text-emerald-400"
+                  size={32}
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+                Succès !
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                La commande a été enregistrée.
+              </p>
               <button
-                onClick={confirmDeleteCommande}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 dark:bg-rose-700 dark:hover:bg-rose-600 text-white transition"
+                onClick={closeCommandeSuccessModal}
+                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-600 text-white transition shadow-md"
               >
-                Supprimer
+                Fermer
               </button>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* === MODALES TERRAINS === */}
-      {isTerrainModalOpen && selectedCommandeId !== null && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-          <div
-            className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
-            onClick={closeTerrainModal}
-          ></div>
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 transform transition-all">
-            <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+        {commandeToDelete && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div
+              className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
+              onClick={closeDeleteCommandeModal}
+            ></div>
+            <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 text-center transform transition-all">
+              <div className="mx-auto w-14 h-14 bg-rose-100 dark:bg-rose-900/30 rounded-full flex items-center justify-center mb-4">
+                <FiAlertTriangle
+                  className="text-rose-600 dark:text-rose-400"
+                  size={28}
+                />
+              </div>
+              <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
+                Supprimer cette commande ?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Réf: <strong>{commandeToDelete.reference}</strong> – Tous les
+                terrains associés seront supprimés.
+              </p>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={closeDeleteCommandeModal}
+                  className="px-5 py-2.5 rounded-xl bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white transition"
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={confirmDeleteCommande}
+                  className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 dark:bg-rose-700 dark:hover:bg-rose-600 text-white transition"
+                >
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {isTerrainModalOpen && selectedCommandeId !== null && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div
+              className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
               onClick={closeTerrainModal}
-              aria-label="Fermer"
-            >
-              <FiX size={24} />
-            </button>
-            <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-white">
-              {editingTerrain ? "Modifier le terrain" : "Ajouter un terrain"}
-            </h2>
-            <TerrainForm
-              terrain={editingTerrain}
-              commandeId={selectedCommandeId}
-              onCancel={closeTerrainModal}
-              onSave={handleSaveTerrain}
-            />
-          </div>
-        </div>
-      )}
-
-      {terrainToDelete && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-          <div
-            className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
-            onClick={closeDeleteTerrainModal}
-          ></div>
-          <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 text-center transform transition-all">
-            <div className="mx-auto w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mb-4">
-              <FiAlertTriangle
-                className="text-amber-600 dark:text-amber-400"
-                size={28}
+            ></div>
+            <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 transform transition-all">
+              <button
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                onClick={closeTerrainModal}
+                aria-label="Fermer"
+              >
+                <FiX size={24} />
+              </button>
+              <h2 className="text-xl font-bold mb-6 text-gray-800 dark:text-white">
+                {editingTerrain ? "Modifier le terrain" : "Ajouter un terrain"}
+              </h2>
+              <TerrainForm
+                terrain={editingTerrain}
+                commandeId={selectedCommandeId}
+                onCancel={closeTerrainModal}
+                onSave={handleSaveTerrain}
               />
             </div>
-            <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
-              Supprimer ce terrain ?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Lon: {terrainToDelete.longitude.toFixed(4)}, Lat:{" "}
-              {terrainToDelete.latitude.toFixed(4)}
-            </p>
-            <div className="flex gap-3 justify-center">
-              <button
-                onClick={closeDeleteTerrainModal}
-                className="px-5 py-2.5 rounded-xl bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white transition"
-              >
-                Annuler
-              </button>
-              <button
-                onClick={confirmDeleteTerrain}
-                className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-600 text-white transition"
-              >
-                Confirmer
-              </button>
+          </div>
+        )}
+
+        {terrainToDelete && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div
+              className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm dark:bg-black/60"
+              onClick={closeDeleteTerrainModal}
+            ></div>
+            <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 text-center transform transition-all">
+              <div className="mx-auto w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mb-4">
+                <FiAlertTriangle
+                  className="text-amber-600 dark:text-amber-400"
+                  size={28}
+                />
+              </div>
+              <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
+                Supprimer ce terrain ?
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Lon: {terrainToDelete.longitude.toFixed(4)}, Lat:{" "}
+                {terrainToDelete.latitude.toFixed(4)}
+              </p>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={closeDeleteTerrainModal}
+                  className="px-5 py-2.5 rounded-xl bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white transition"
+                >
+                  Annuler
+                </button>
+                <button
+                  onClick={confirmDeleteTerrain}
+                  className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 dark:bg-amber-700 dark:hover:bg-amber-600 text-white transition"
+                >
+                  Confirmer
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
